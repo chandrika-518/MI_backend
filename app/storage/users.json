@@ -1,0 +1,36 @@
+{
+  "users": [
+    {
+      "email": "user@example.com",
+      "password": "pbkdf2_sha256$290000$Hp9Y6PXLuHJ0cM07UW8cSA==$SLQh8PqPzfppyfl7OMkElrvxFGfr6eurFrUu975v+1g="
+    },
+    {
+      "email": "longpassword-8185d8b3@example.com",
+      "password": "pbkdf2_sha256$290000$Cd4N+Rlng3zdWvssq5EbSQ==$CvoVSJ3qSouAh7S58pGo0nPaVCOkFt7YMV2y0pHTWgM="
+    },
+    {
+      "email": "newuser-d61d8b91@example.com",
+      "password": "pbkdf2_sha256$290000$5w5fLx0ApqTopuTfRifNlA==$FOjPLW7GKtHM4IVTVyHHqAMkLxlxL0uTQoOVa+oGG0c="
+    },
+    {
+      "email": "longpassword-d9ee5f1b@example.com",
+      "password": "pbkdf2_sha256$290000$LkxSSv0QIPb9HseMpp5cIQ==$hXk34F/onuRq/RU7n3LVJWC/bbjg4LZ13quP4bHXv64="
+    },
+    {
+      "email": "chandrika@gmail.com",
+      "password": "pbkdf2_sha256$290000$DjgR5e956urhIwA6BR/L5Q==$W9J3WZgb/rWlOkKEe91PfxLGZlivaL8MCVqEe2P98Cc="
+    },
+    {
+      "email": "bavithra@gmail.com",
+      "password": "pbkdf2_sha256$290000$YcRD8FHYZl3SlGQTkL2H5Q==$8J2Vb+ny49Xes1gfNvjvuh8G72dBj6gjblU3/tvRFwE="
+    },
+    {
+      "email": "abc@gmail.com",
+      "password": "pbkdf2_sha256$290000$XgXhADVYn8Ju7m/6dp8eug==$qgtNSauA2N0uDEzV1OAHwX4i7l6RM4zTDtScZjRRLxA="
+    },
+    {
+      "email": "xyz@gmail.com",
+      "password": "pbkdf2_sha256$290000$rZWw8i5NQtnTNjVT7mI1SQ==$4SwHz069Y2bFbsbqd8OTe7MznSNhFzAhNAClw9Ml2+Q="
+    }
+  ]
+}
