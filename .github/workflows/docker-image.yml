@@ -41,6 +41,5 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            ${{ secrets.ACR_LOGIN_SERVER }}/mi-backend:latest
             ${{ secrets.ACR_LOGIN_SERVER }}/mi-backend:${{ steps.read_version.outputs.VERSION }}
-            ${{ secrets.ACR_LOGIN_SERVER }}/mi-backend:${{ github.sha }}
+
