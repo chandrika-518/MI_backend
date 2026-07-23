@@ -1,5 +1,23 @@
-# Python virtual environment
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Pytest
+.pytest_cache/
+
+# Virtual environment
 .venv/
+venv/
+
+# Environment variables
 .env
 .env.example
 
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
