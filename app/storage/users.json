@@ -131,6 +131,14 @@
     {
       "email": "newuser-752a0660@example.com",
       "password": "pbkdf2_sha256$290000$zOxsUwVHrDG7ioT71t7zIw==$uHZef791MJVADS6wujmLhlYVrliEvt36gurWGvKmUOY="
+    },
+    {
+      "email": "longpassword-9c5d72d9@example.com",
+      "password": "pbkdf2_sha256$290000$P7CuvJly7G+Fyn5aCzwSGQ==$PwhJBWNKnYIDOuHtgihrkdaNOZ5+FZ6pKAgWvz+9BOo="
+    },
+    {
+      "email": "newuser-2ea156a1@example.com",
+      "password": "pbkdf2_sha256$290000$xaW6WYSaqMSKY1q/CT4Ntw==$yrILVS8uRcdZ0/ioMbkb5hsiOAxAfHLGboN34eXa1co="
     }
   ]
 }
