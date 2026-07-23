@@ -1,0 +1,40 @@
+name: Terraform Validation
+
+on:
+  push:
+    paths:
+      - 'bootstrap/**.tf'
+      - 'infra/**.tf'
+      - '.github/workflows/**'
+  pull_request:
+    paths:
+      - 'bootstrap/**.tf'
+      - 'infra/**.tf'
+      - '.github/workflows/**'
+
+jobs:
+  fmt-and-validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.8.0
+
+      - name: Validate bootstrap Terraform
+        working-directory: ./bootstrap
+        run: |
+          terraform init -backend=false
+          terraform fmt -check
+          terraform validate
+
+      - name: Validate infra Terraform
+        working-directory: ./infra
+        run: |
+          terraform init -backend=false
+          terraform fmt -check
+          terraform validate
