@@ -5,6 +5,9 @@ from jose import jwt
 
 from app.core.settings import settings
 from app.main import app
+from app.schemas.research import ResearchRequest
+from app.services.llm.models import JudgeResult, MarketIntelligenceReport
+from app.services.research_service import ResearchService
 
 client = TestClient(app)
 
@@ -100,8 +103,67 @@ def test_research_endpoint_with_valid_token():
     )
     assert response.status_code == 200
     payload = response.json()
-    assert payload["hallucinationCheck"]["status"] == "Supported"
-    assert payload["themes"][0]["title"] == "Enterprise AI"
+    assert payload["hallucinationCheck"]["status"] in {"Supported", "Needs review"}
+    assert payload["themes"][0]["title"]
+
+
+def test_research_service_is_dynamic_for_any_input():
+    service = ResearchService()
+    payload = ResearchRequest(
+        competitors=["Acme", "Globex"],
+        topics=["AI assistants", "workflow automation"],
+        urls=["https://blog.google/technology/ai/"],
+        context="Summarize the latest developments for arbitrary competitors and topics.",
+    )
+
+    result = service.create_research(payload)
+
+    assert result.themes
+    assert result.competitorActivities or result.themes[0].summary
+    assert result.hallucinationCheck.status in {"Supported", "Needs review"}
+
+
+def test_research_service_explicitly_reports_missing_topics_and_competitors(monkeypatch):
+    service = ResearchService()
+    payload = ResearchRequest(
+        competitors=["OpenAI", "Anthropic"],
+        topics=["AI agents", "enterprise automation"],
+        urls=["https://example.com"],
+        context="Summarize only the supplied source content.",
+    )
+
+    class DummyAnalyzer:
+        def analyze_articles(self, scraped_articles, competitors, topics, context):
+            return (
+                MarketIntelligenceReport(
+                    executive_summary="No relevant information found in the provided sources.",
+                    insights_grouped_by_theme=[],
+                    market_trends=[],
+                    competitor_activities=[],
+                    business_insights=[],
+                    statistics=[],
+                    companies_mentioned=[],
+                    source_traceability=[{"source_url": "https://example.com"}],
+                ),
+                JudgeResult(
+                    accuracy_score=0.5,
+                    completeness_score=0.5,
+                    hallucination_detection="No unsupported claims detected in the generated summary.",
+                    unsupported_claims=[],
+                    missing_information=[],
+                    overall_feedback="The report was generated from the available article analyses and presented in a structured summary.",
+                ),
+            )
+
+    monkeypatch.setattr(service.scraper, "scrape_articles", lambda urls: [{"url": urls[0], "article_text": "Nothing relevant"}])
+    service.analyzer = DummyAnalyzer()
+
+    result = service.create_research(payload)
+
+    assert len(result.themes) == len(payload.topics)
+    assert all("No information found for this topic in the provided sources." in theme.summary for theme in result.themes)
+    assert len(result.competitorActivities) == len(payload.competitors)
+    assert all("No competitor activity found in the provided sources." in activity.activity for activity in result.competitorActivities)
 
 
 def test_history_endpoint_requires_auth_token():

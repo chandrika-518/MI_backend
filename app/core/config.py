@@ -2,9 +2,19 @@ from __future__ import annotations
 
 import os
 from dataclasses import dataclass
+from pathlib import Path
+
 from dotenv import load_dotenv
 
-load_dotenv()
+backend_root = Path(__file__).resolve().parents[2]
+workspace_root = Path(__file__).resolve().parents[3]
+
+for env_path in [backend_root / ".env", backend_root / ".env.example", workspace_root / ".env"]:
+    if env_path.exists():
+        load_dotenv(env_path, override=True)
+        break
+else:
+    load_dotenv(override=True)
 
 
 @dataclass(frozen=True)
